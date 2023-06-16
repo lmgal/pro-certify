@@ -11,7 +11,6 @@ interface SignUpNextApiRequest extends NextApiRequest {
   }
 }
 
-
 export default async function handler(
   req: SignUpNextApiRequest,
   res: NextApiResponse
