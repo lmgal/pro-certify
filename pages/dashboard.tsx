@@ -19,8 +19,11 @@ import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
+import ListItemIcon from '@mui/material/ListItemIcon'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
+import AddIcon from '@mui/icons-material/Add'
+
 
 import Copyright from '@/components/Copyright'
 import Templates from '@/components/Templates'
@@ -145,7 +148,10 @@ export default function Dashboard(props: DashboardProps) {
                 <Divider />
                 <List component="nav">
                     <ListItemButton>
-                        <ListItemText primary="Hi" />
+                        <ListItemIcon>
+                            <AddIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Add template" />
                     </ListItemButton>
                     <Divider sx={{ my: 1 }} />
                 </List>
@@ -200,7 +206,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     }
 
     // Fetch templates
-    const { data: templates, error: templatesError } = await supabase
+    const { data: templates } = await supabase
         .from('templates')
         .select('*')
         .eq('user_id', session.user.id)
