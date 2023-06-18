@@ -28,7 +28,7 @@ export default function Templates(props: TemplatesProps) {
                 Start by clicking a template to mint your NFT
             </Typography>
             {templates?.length! > 0 ? (
-                <ImageList sx={{ minHeight: height }} cols={12} gap={8}>
+                <ImageList sx={{ height: height }} cols={12} gap={8}>
                     <ImageListItem key="Subheader" />
                     {templates?.map(template => (
                         <ImageListItem key={template.id}>
