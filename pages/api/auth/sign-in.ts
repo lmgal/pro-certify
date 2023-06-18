@@ -56,7 +56,7 @@ export default async function handler(
         email: wallet.org_email,
         type: 'magiclink',
         options: {
-            redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`
+            redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/signing-in`
         }
     })
 
