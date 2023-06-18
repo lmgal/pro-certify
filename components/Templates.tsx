@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography'
 import EditIcon from '@mui/icons-material/Edit'
 import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
-import Image from 'next/image'
 import Link from 'next/link'
+import { Tooltip } from '@mui/material'
 
 
 type TemplatesProps = {
@@ -28,28 +28,28 @@ export default function Templates(props: TemplatesProps) {
                 Start by clicking a template to mint your NFT
             </Typography>
             {templates?.length! > 0 ? (
-                <ImageList sx={{ height: height }}>
-                    <ImageListItem key="Subheader" cols={2} />
+                <ImageList sx={{ minHeight: height }} cols={12} gap={8}>
+                    <ImageListItem key="Subheader" />
                     {templates?.map(template => (
                         <ImageListItem key={template.id}>
                             <Link href={`/mint?templateId=${template.id}`}>
-                                <a>
-                                    <Image
-                                        src={template.imageUrl}
-                                        alt={template.name}
-                                        loading='lazy'
-                                    />
-                                </a>
+                                <img
+                                    src={template.imageUrl}
+                                    alt={template.name}
+                                    loading='lazy'
+                                    width={300}
+                                />
                             </Link>
                             <ImageListItemBar
                                 title={template.name}
                                 actionIcon={
-                                    <IconButton
-                                        sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                        aria-label={`Edit ${template.name}`}
-                                    >
-                                        <EditIcon />
-                                    </IconButton>
+                                    <Tooltip title='Edit template'>
+                                        <IconButton
+                                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                        >
+                                            <EditIcon />
+                                        </IconButton>
+                                    </Tooltip>
                                 }
                             />
                         </ImageListItem>
@@ -57,7 +57,7 @@ export default function Templates(props: TemplatesProps) {
                 </ImageList>
             ) : (
                 <Box minHeight={height} sx={{
-                    display: 'flex', 
+                    display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>

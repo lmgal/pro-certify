@@ -49,7 +49,7 @@ export default function Dashboard(props: DashboardProps) {
                                     p: 2,
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    height: 240,
+                                    minHeight: 240,
                                 }}
                             >
                                 <Templates templates={templates} height={175} />
@@ -84,20 +84,22 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 
     // Fetch images for templates
     if (templates && templates.length > 0) {
-        const { data: images } = await supabase
-            .storage
-            .from('templates')
-            .createSignedUrls(
-                templates.map(template => template.id + '.svg'),
-                60
-            )
+        // Template bucket is public for now
+        const images = templates.map((template) => {
+            const { data: image } = supabase
+                .storage
+                .from('templates')
+                .getPublicUrl(`${template.id}.svg`)
+
+            return image.publicUrl
+        })
 
         return {
             props: {
                 templates: templates.map((template, index) => {
                     return {
                         ...template,
-                        imageUrl: images![index].signedUrl
+                        imageUrl: images[index]
                     }
                 })
             }
