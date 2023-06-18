@@ -52,7 +52,7 @@ export default function Dashboard(props: DashboardProps) {
                                     height: 240,
                                 }}
                             >
-                                <Templates templates={templates} height={240} />
+                                <Templates templates={templates} height={175} />
                             </Paper>
                         </Grid>
                     </Grid>
