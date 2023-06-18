@@ -17,6 +17,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
 
@@ -79,7 +82,8 @@ export default function Dashboard() {
         setOpen(!open)
     }
 
-    <Box sx={{ display: 'flex' }}>
+    return (
+<Box sx={{ display: 'flex' }}>
         <AppBar position="absolute" open={open}>
             <Toolbar
                 sx={{
@@ -129,9 +133,10 @@ export default function Dashboard() {
             </Toolbar>
             <Divider />
             <List component="nav">
-                a
+                <ListItemButton>
+                    <ListItemText primary="Hi"/>
+                </ListItemButton>
                 <Divider sx={{ my: 1 }} />
-                a
             </List>
         </Drawer>
         <Box
@@ -186,6 +191,7 @@ export default function Dashboard() {
             </Container>
         </Box>
     </Box>
+    )   
 }
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {

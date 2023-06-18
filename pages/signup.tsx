@@ -13,6 +13,7 @@ import axios from 'axios'
 import { useForm, Controller } from 'react-hook-form'
 import { useWallet } from '@/context/wallet'
 import { useEffect } from 'react'
+import { NetworkType } from '@airgap/beacon-sdk'
 
 import AuthImage from '../public/auth-bg.png'
 
@@ -37,8 +38,7 @@ export default function SignUp() {
     const connectWallet = async () => {
         await wallet.requestPermissions({
             network: {
-                // @ts-expect-error
-                type: 'ghostnet'
+                type: process.env.NEXT_PUBLIC_TZ_NETWORK as NetworkType
             }
         })
         const userAddress = await wallet.getPKH()

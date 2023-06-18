@@ -14,6 +14,7 @@ import GlobalStyles from '@mui/material/GlobalStyles'
 
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import { NetworkType} from "@airgap/beacon-sdk"
 
 import { useWallet } from "@/context/wallet"
 
@@ -76,8 +77,7 @@ export default function Login() {
     const connectWallet = async () => {
         await wallet.requestPermissions({
             network: {
-                // @ts-expect-error
-                type: 'ghostnet'
+                type: process.env.NEXT_PUBLIC_TZ_NETWORK as NetworkType
             }
         })
         const userAddress = await wallet.getPKH()

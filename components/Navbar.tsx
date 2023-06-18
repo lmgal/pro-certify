@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
+import { NetworkType } from '@airgap/beacon-sdk'
 import { useWallet } from '@/context/wallet'
 
 export default function Navbar() {
@@ -17,7 +18,7 @@ export default function Navbar() {
     const connectWallet = async () => {
         await wallet.requestPermissions({
             network: {
-                type: 'ghostnet'
+                type: process.env.NEXT_PUBLIC_TZ_NETWORK as NetworkType
             }
         })
         const address = await wallet.getPKH()
@@ -41,7 +42,7 @@ export default function Navbar() {
     useEffect(() => {
         (async () => {
             const account = await wallet.client.getActiveAccount()
-            setAddress(account.address)
+            setAddress(account ? account.address : '')
         })()
     }, [])
 
