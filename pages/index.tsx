@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import Navbar from '@/components/Navbar'
 
 import LandingImage from '../public/landing-bg.png'
+import Copyright from '@/components/Copyright'
 
 export default function Home() {
   const router = useRouter()
@@ -52,6 +53,7 @@ export default function Home() {
             </Stack>
           </Container>
         </Box>
+        <Copyright sx={{ pt: 4 }} />
       </main>
     </>
   )
