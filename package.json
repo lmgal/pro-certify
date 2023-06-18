@@ -10,25 +10,36 @@
     "update-types": "npx supabase gen types typescript --project-id sivgqtlmmavidbjlfeds --schema public > types/supabase.ts"
   },
   "dependencies": {
+    "@airgap/beacon-sdk": "^4.0.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.5",
+    "@supabase/auth-helpers-nextjs": "^0.7.2",
     "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/supabase-js": "^2.25.0",
+    "@taquito/beacon-wallet": "^17.0.0",
+    "@taquito/signer": "^17.0.0",
+    "@taquito/taquito": "^17.0.0",
+    "@taquito/utils": "^17.0.0",
     "@types/node": "20.3.1",
     "@types/react": "18.2.12",
     "@types/react-dom": "18.2.5",
+    "axios": "^1.4.0",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.6",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.0",
     "next": "13.4.6",
+    "nodemailer": "^6.9.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.44.3",
+    "supabase": "^1.68.6",
     "typescript": "5.1.3"
   },
   "devDependencies": {
-    "supabase": ">=1.8.1"
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/nodemailer": "^6.4.8"
   }
 }
