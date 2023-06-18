@@ -100,7 +100,7 @@ export default function Login() {
             <GlobalStyles styles={{
                 body: {
                     backgroundImage: `url(${AuthImage.src})`,
-                    backgroundSize: 'cover',
+                    backgroundSize: 'full',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
                 }

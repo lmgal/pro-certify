@@ -75,7 +75,7 @@ export default function SignUp() {
             <GlobalStyles styles={{
                 body: {
                     backgroundImage: `url(${AuthImage.src})`,
-                    backgroundSize: 'cover',
+                    backgroundSize: 'full',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
                 }
