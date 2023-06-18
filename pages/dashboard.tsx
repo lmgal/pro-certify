@@ -18,12 +18,22 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
 
 import Copyright from '@/components/Copyright'
+import Templates from '@/components/Templates'
+
+import { Database } from '@/types/supabase'
+
+type DashboardProps = {
+    templates: { 
+        id: string,
+        name: string,
+        imageUrl: string
+    }[] | null
+}
 
 const drawerWidth: number = 240
 
@@ -76,138 +86,150 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 )
 
 
-export default function Dashboard() {
+export default function Dashboard(props: DashboardProps) {
+    const { templates } = props
     const [open, setOpen] = useState(true)
     const toggleDrawer = () => {
         setOpen(!open)
     }
 
     return (
-<Box sx={{ display: 'flex' }}>
-        <AppBar position="absolute" open={open}>
-            <Toolbar
-                sx={{
-                    pr: '24px', // keep right padding when drawer closed
-                }}
-            >
-                <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={toggleDrawer}
+        <Box sx={{ display: 'flex' }}>
+            <AppBar position="absolute" open={open}>
+                <Toolbar
                     sx={{
-                        marginRight: '36px',
-                        ...(open && { display: 'none' }),
+                        pr: '24px', // keep right padding when drawer closed
                     }}
                 >
-                    <MenuIcon />
-                </IconButton>
-                <Typography
-                    component="h1"
-                    variant="h6"
-                    color="inherit"
-                    noWrap
-                    sx={{ flexGrow: 1 }}
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={toggleDrawer}
+                        sx={{
+                            marginRight: '36px',
+                            ...(open && { display: 'none' }),
+                        }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography
+                        component="h1"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                        sx={{ flexGrow: 1 }}
+                    >
+                        Dashboard
+                    </Typography>
+                    <IconButton color="inherit">
+                        <Badge badgeContent={4} color="secondary">
+                            <NotificationsIcon />
+                        </Badge>
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+            <Drawer variant="permanent" open={open}>
+                <Toolbar
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                        px: [1],
+                    }}
                 >
-                    Dashboard
-                </Typography>
-                <IconButton color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-            </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-            <Toolbar
+                    <IconButton onClick={toggleDrawer}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </Toolbar>
+                <Divider />
+                <List component="nav">
+                    <ListItemButton>
+                        <ListItemText primary="Hi" />
+                    </ListItemButton>
+                    <Divider sx={{ my: 1 }} />
+                </List>
+            </Drawer>
+            <Box
+                component="main"
                 sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    px: [1],
+                    backgroundColor: (theme) =>
+                        theme.palette.mode === 'light'
+                            ? theme.palette.grey[100]
+                            : theme.palette.grey[900],
+                    flexGrow: 1,
+                    height: '100vh',
+                    overflow: 'auto',
                 }}
             >
-                <IconButton onClick={toggleDrawer}>
-                    <ChevronLeftIcon />
-                </IconButton>
-            </Toolbar>
-            <Divider />
-            <List component="nav">
-                <ListItemButton>
-                    <ListItemText primary="Hi"/>
-                </ListItemButton>
-                <Divider sx={{ my: 1 }} />
-            </List>
-        </Drawer>
-        <Box
-            component="main"
-            sx={{
-                backgroundColor: (theme) =>
-                    theme.palette.mode === 'light'
-                        ? theme.palette.grey[100]
-                        : theme.palette.grey[900],
-                flexGrow: 1,
-                height: '100vh',
-                overflow: 'auto',
-            }}
-        >
-            <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                <Grid container spacing={3}>
-                    {/* Chart */}
-                    <Grid item xs={12} md={8} lg={9}>
-                        <Paper
-                            sx={{
-                                p: 2,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: 240,
-                            }}
-                        >
-                            a
-                        </Paper>
+                <Toolbar />
+                <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                    <Grid container spacing={3}>
+                        {/* Chart */}
+                        <Grid item xs={12} >
+                            <Paper
+                                sx={{
+                                    p: 2,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    height: 240,
+                                }}
+                            >
+                                <Templates templates={templates} height={240} />
+                            </Paper>
+                        </Grid>
                     </Grid>
-                    {/* Recent Deposits */}
-                    <Grid item xs={12} md={4} lg={3}>
-                        <Paper
-                            sx={{
-                                p: 2,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: 240,
-                            }}
-                        >
-                            b
-                        </Paper>
-                    </Grid>
-                    {/* Recent Orders */}
-                    <Grid item xs={12}>
-                        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                            c
-                        </Paper>
-                    </Grid>
-                </Grid>
-                <Copyright sx={{ pt: 4 }} />
-            </Container>
+                    <Copyright sx={{ pt: 4 }} />
+                </Container>
+            </Box>
         </Box>
-    </Box>
-    )   
+    )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    const supabase = createPagesServerClient(context)
+    const supabase = createPagesServerClient<Database>(context)
     const { data: { session }, error } = await supabase.auth.getSession()
 
-    // if (error || !session) {
-    //     return {
-    //         redirect: {
-    //             destination: '/',
-    //             permanent: false
-    //         }
-    //     }
-    // }
+    if (error || !session) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
+    // Fetch templates
+    const { data: templates, error: templatesError } = await supabase
+        .from('templates')
+        .select('*')
+        .eq('user_id', session.user.id)
+
+    // Fetch images for templates
+    if (templates && templates.length > 0) {
+        const { data: images } = await supabase
+            .storage
+            .from('templates')
+            .createSignedUrls(
+                templates.map(template => template.id + '.svg'),
+                60
+            )
+
+        return {
+            props: {
+                templates: templates.map((template, index) => {
+                    return {
+                        ...template,
+                        imageUrl: images![index].signedUrl
+                    }
+                })
+            }
+        }
+    }
 
     return {
-        props: {}
+        props: {
+            templates: null
+        }
     }
 }
