@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useRouter } from 'next/router'
+import { NetworkType } from '@airgap/beacon-sdk'
 
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
@@ -23,8 +26,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import HomeIcon from '@mui/icons-material/Home'
 
 import { useWallet } from '@/context/wallet'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useRouter } from 'next/router'
 
 const drawerWidth: number = 240
 
@@ -149,11 +150,9 @@ export default function NavbarDrawer() {
                         Dashboard
                     </Typography>
                     <IconButton color="inherit" onClick={handleMenu}>
-                        <Badge badgeContent={4} color="secondary">
-                            <Tooltip title={address}>
-                                <AccountCircleIcon />
-                            </Tooltip>
-                        </Badge>
+                        <Tooltip title={address}>
+                            <AccountCircleIcon />
+                        </Tooltip>
                     </IconButton>
                     <Menu
                         id="menu-appbar"
