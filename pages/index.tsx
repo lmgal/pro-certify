@@ -10,9 +10,18 @@ import Navbar from '@/components/Navbar'
 
 import LandingImage from '../public/landing-bg.png'
 import Copyright from '@/components/Copyright'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useEffect } from 'react'
 
 export default function Home() {
   const router = useRouter()
+  const supabase = useSupabaseClient()
+
+  useEffect(() => {
+    supabase.auth.getUser().then((user) => {
+      console.log(user)
+    })
+  }, [])
 
   return (
     <>

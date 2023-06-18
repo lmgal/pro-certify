@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.5",
-    "@supabase/auth-helpers-nextjs": "^0.7.2",
+    "@supabase/auth-helpers-nextjs": "0.4.5",
     "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/supabase-js": "^2.25.0",
     "@taquito/beacon-wallet": "^17.0.0",

@@ -5,7 +5,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import createCache from '@emotion/cache'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
-import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { WalletProvider } from '@/context/wallet'
 
 import theme from '@/config/theme'
@@ -18,10 +18,10 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {  
   const { emotionCache = clientSideEmotionCache, ...other } = pageProps as MyAppProps
 
-  const [supabase] = useState(() => createPagesBrowserClient())
+  const [supabase] = useState(() => createBrowserSupabaseClient())
 
   return (
     <>

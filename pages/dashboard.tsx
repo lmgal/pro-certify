@@ -1,5 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { createPagesServerClient } from '@supabase/auth-helpers-nextjs'
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -64,7 +64,7 @@ export default function Dashboard(props: DashboardProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    const supabase = createPagesServerClient<Database>(context)
+    const supabase = createServerSupabaseClient<Database>(context)
     const { data: { session }, error } = await supabase.auth.getSession()
 
     if (error || !session) {

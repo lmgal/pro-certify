@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { NetworkType } from '@airgap/beacon-sdk'
 
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'

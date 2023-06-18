@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { char2Bytes } from "@taquito/utils"
-import { RequestSignPayloadInput, SigningType } from "@airgap/beacon-sdk"
+import { RequestSignPayloadInput, SigningType, NetworkType } from "@airgap/beacon-sdk"
 
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
@@ -14,7 +14,6 @@ import GlobalStyles from '@mui/material/GlobalStyles'
 
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { NetworkType} from "@airgap/beacon-sdk"
 
 import { useWallet } from "@/context/wallet"
 
@@ -58,7 +57,7 @@ export default function Login() {
                 payload
             )
 
-            // Get sign-in link
+            // Get magic link
             const { data } = await axios.post('/api/auth/sign-in', {
                 payload: payloadBytes,
                 publicKey: account.publicKey,
@@ -67,7 +66,7 @@ export default function Login() {
 
             const link : string = data.link
 
-            // Redirect to sign-in link
+            // Redirect to magic link
             router.push(link)
         } catch (e) {
             console.log(e)
