@@ -1,11 +1,13 @@
 # ProCertify
 
-A dApp for creating certificates and licenses in the form of NFTs
+A dApp for creating certificates and licenses in the form of NFTs. This is the final project submitted for
+CS 173
 
 The contracts below are deployed on Tezos Ghostnet
 
-NFT Contract Address: KT1LTdh2kW3fk6PAsXudqX44HTqCzN8iSmgf
-Manager Contract Address: KT1NX4WVCDVA1PCJQ5iY1hLnNzUWQJjB6yqY
+**NFT Contract Address:** KT1LTdh2kW3fk6PAsXudqX44HTqCzN8iSmgf
+
+**Manager Contract Address:** KT1NX4WVCDVA1PCJQ5iY1hLnNzUWQJjB6yqY
 
 ## How to run locally
 
