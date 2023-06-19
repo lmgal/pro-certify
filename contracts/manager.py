@@ -38,7 +38,7 @@ class Manager(sp.Contract):
         args = [
             sp.record(
                 to_=params.to_,
-                metadata: { '' : params.metadata }
+                metadata={ '' : params.metadata }
             )
         ]
 
@@ -56,3 +56,9 @@ class Manager(sp.Contract):
     def update_admin(self, admin):
         sp.verify(sp.sender == self.data.admin, "NOT_ADMIN")
         self.data.admin = admin
+
+@sp.add_test(name = "Manager")
+def test():
+    scenario = sp.test_scenario()
+    admin = sp.test_account("admin")
+    org = sp.test_account("org")
