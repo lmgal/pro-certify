@@ -13,10 +13,8 @@ class Manager(sp.Contract):
                 tkey=sp.TNat, 
                 tvalue=sp.TRecord(
                     holder=sp.TAddress, 
-                    author=sp.TAddress, 
-                    amount=sp.TMutez, 
-                    token_id=sp.TNat, 
-                    collectable=sp.TBool
+                    author=sp.TAddress,
+                    token_id=sp.TNat
                 )
             ),
             token_id=0,
@@ -40,4 +38,21 @@ class Manager(sp.Contract):
         args = [
             sp.record(
                 to_=params.to_,
+                metadata: { '' : params.metadata }
+            )
         ]
+
+        sp.transfer(args, sp.mutez(0), token_contract)
+
+        sp.data.data[self.data.token_id] = sp.record(
+            holder=sp.self_address,
+            author=params.to_,
+            token_id=self.data.token_id
+        )
+
+        self.data.token_id += 1
+
+    @sp.entry_point
+    def update_admin(self, admin):
+        sp.verify(sp.sender == self.data.admin, "NOT_ADMIN")
+        self.data.admin = admin
