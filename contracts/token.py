@@ -2,43 +2,18 @@ import smartpy as sp
 
 FA2 = sp.io.import_template("fa2_lib.py")
 
-class OrganizationTransfer:
-    """
-        (Transfer Policy) Only the organization, the first holder, is allowed
-        to transfer tokens. Also allow holders to burn their tokens.
-    """
-
-    def init_policy(self, contract):
-        self.name = 'org-transfer',
-        self.supports_transfer = True
-        self.supports_operator = False
-        contract.update_initial_storage(
-            token_organizations=sp.big_map(
-                tkey=sp.TNat, tvalue=sp.TAddress
-            )
-        )
-
-    def check_tx_transfer_permissions(self, contract, from_, to_, token_id):
-        sp.verify(
-            (contract.data.token_organizations[token_id] == from_) | (from_ == to_),
-            "PROCERT_ILLEGAL_TRANSFER",
-        )
-
-    def check_operator_update_permissions(self, contract, operator_permission):
-        pass
-
-    def is_operator(self, contract, operator_permission):
-        return False
-
-
 class Fa2Cert(FA2.Admin, FA2.Fa2Nft):
     def __init__(self, admin, metadata, **kwargs):
-        FA2.Fa2Nft.__init__(self, metadata, policy=OrganizationTransfer(), **kwargs)
+        FA2.Fa2Nft.__init__(self, metadata, policy=FA2.NoTransfer(), **kwargs)
         FA2.Admin.__init__(self, admin)
+        # Store minters
+        self.update_initial_storage(
+            minter=sp.big_map(tkey=sp.TNat, tvalue=sp.TAddress)
+        )
 
     @sp.entry_point
     def mint(self, batch):
-        """ Admin can mint new tokens. Track the first owner """
+        """ Anyone can mint tokens. Cannot mint for themselves. """
         sp.set_type(
             batch,
             sp.TList(
@@ -48,20 +23,21 @@ class Fa2Cert(FA2.Admin, FA2.Fa2Nft):
                 ).layout(("to_", "metadata"))
             ),
         )
-        sp.verify(self.is_administrator(sp.sender), "FA2_NOT_ADMIN")
         with sp.for_("action", batch) as action:
+            sp.verify(sp.sender != action.to_, "FA2_NO_SELF_MINTING")
             token_id = sp.compute(self.data.last_token_id)
             metadata = sp.record(token_id=token_id, token_info=action.metadata)
             self.data.token_metadata[token_id] = metadata
             self.data.ledger[token_id] = action.to_
             self.data.last_token_id += 1
-            self.data.token_organizations[token_id] = action.to_
+            self.data.minter[token_id] = sp.sender
 
     @sp.entry_point
     def burn(self, batch):
-        """Users can burn tokens if they have the transfer policy permission.
-
-        Burning an nft destroys its metadata.
+        """ 
+            Holders can burn their tokens.
+            Minters can burn tokens they minted from holders.
+            Admin can burn any token.
         """
         sp.set_type(
             batch,
@@ -73,12 +49,14 @@ class Fa2Cert(FA2.Admin, FA2.Fa2Nft):
                 ).layout(("from_", ("token_id", "amount")))
             ),
         )
-        sp.verify(self.policy.supports_transfer, "FA2_TX_DENIED")
+
         with sp.for_("action", batch) as action:
             sp.verify(self.is_defined(action.token_id), "FA2_TOKEN_UNDEFINED")
-            self.policy.check_tx_transfer_permissions(
-                self, action.from_, action.from_, action.token_id
-            )
+            sp.verify(
+                (self.data.ledger[action.token_id] == sp.sender) |
+                (self.is_administrator(sp.sender)) |
+                (self.data.minter[action.token_id] == sp.sender),
+                "FA2_NOT_OWNER_MINTER_ADMIN")
             with sp.if_(action.amount > 0):
                 sp.verify(
                     (action.amount == sp.nat(1))
@@ -88,7 +66,13 @@ class Fa2Cert(FA2.Admin, FA2.Fa2Nft):
                 # Burn the token
                 del self.data.ledger[action.token_id]
                 del self.data.token_metadata[action.token_id]
-                del self.data.token_organizations[action.token_id]
+                del self.data.minter[action.token_id]
+
+    @sp.entry_point
+    def set_admin(self, admin):
+        """ Admin can set a new admin """
+        sp.verify(self.is_administrator(sp.sender), "FA2_NOT_ADMIN")
+        self.data.administrator = admin
 
     
 
@@ -104,20 +88,14 @@ def test():
     contract = Fa2Cert(admin.address, metadata=sp.utils.metadata_of_url("ipfs://QmW8jPMdBmFvsSEoLWPPhaozN6jGQFxxkwuMLtVFqEy6Fb"))
     scenario += contract
 
-    # Org mints a token
+    # Org mints a token for user1
     scenario.h2("Mint token")
     scenario += contract.mint(sp.list([
         sp.record(
-            to_=org.address,
+            to_=user1.address,
             metadata=sp.map({sp.string("name"): sp.utils.bytes_of_string("token1")}),
         )])
-    ).run(sender=admin)
-
-    # Org transfers token to user1
-    scenario.h2("Transfer token from org")
-    scenario += contract.transfer(sp.list([sp.record(from_=org.address, txs=sp.list([
-        sp.record(to_=user1.address, token_id=sp.nat(0), amount=sp.nat(1))
-    ]))])).run(sender=org)
+    ).run(sender=org)
 
     # User1 tries to transfer token to user2
     scenario.h2("Transfer token from user1")
@@ -125,8 +103,44 @@ def test():
         sp.record(to_=user2.address, token_id=sp.nat(0), amount=sp.nat(1))
     ]))])).run(sender=user1, valid=False)
 
+    # User2 tries to burn token from user1
+    scenario.h2("Burn token from user2")
+    scenario += contract.burn(sp.list([
+        sp.record(from_=user1.address, token_id=sp.nat(0), amount=sp.nat(1))
+    ])).run(sender=user2, valid=False)
+
     # User1 burns token
     scenario.h2("Burn token from user1")
     scenario += contract.burn(sp.list([
         sp.record(from_=user1.address, token_id=sp.nat(0), amount=sp.nat(1))
     ])).run(sender=user1)
+
+    # Org mints another token for user1
+    scenario.h2("Mint another token")
+    scenario += contract.mint(sp.list([
+        sp.record(
+            to_=user1.address,
+            metadata=sp.map({sp.string("name"): sp.utils.bytes_of_string("token1")}),
+        )])
+    ).run(sender=org)
+
+    # Org burns token from user1
+    scenario.h2("Burn token from org")
+    scenario += contract.burn(sp.list([
+        sp.record(from_=user1.address, token_id=sp.nat(1), amount=sp.nat(1))
+    ])).run(sender=org)
+
+    # User1 mints for user2
+    scenario.h2("Mint token for user2")
+    scenario += contract.mint(sp.list([
+        sp.record(
+            to_=user2.address,
+            metadata=sp.map({sp.string("name"): sp.utils.bytes_of_string("token1")}),
+        )])
+    ).run(sender=user1)
+
+    # Admin burns token from user2
+    scenario.h2("Burn token from admin")
+    scenario += contract.burn(sp.list([
+        sp.record(from_=user2.address, token_id=sp.nat(2), amount=sp.nat(1))
+    ])).run(sender=admin)
