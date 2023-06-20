@@ -5,9 +5,7 @@ CS 173
 
 The contracts below are deployed on Tezos Ghostnet
 
-**NFT Contract Address:** KT1LTdh2kW3fk6PAsXudqX44HTqCzN8iSmgf
-
-**Manager Contract Address:** KT1NX4WVCDVA1PCJQ5iY1hLnNzUWQJjB6yqY
+**NFT Contract Address:** KT1SKqhq5vQxxNNStzR9JNanH9ZMcv7X7gP1
 
 ## How to run locally
 
