@@ -67,12 +67,12 @@ class Fa2Cert(FA2.Admin, FA2.Fa2Nft):
                 del self.data.ledger[action.token_id]
                 del self.data.token_metadata[action.token_id]
                 del self.data.minter[action.token_id]
-
+                
     @sp.entry_point
-    def set_admin(self, admin):
-        """ Admin can set a new admin """
+    def set_metadata(self, metadata):
+        """ Admin can set new metadata """
         sp.verify(self.is_administrator(sp.sender), "FA2_NOT_ADMIN")
-        self.data.administrator = admin
+        self.data.metadata = metadata
 
     
 
