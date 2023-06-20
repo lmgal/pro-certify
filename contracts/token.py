@@ -88,8 +88,7 @@ def test():
     contract = Fa2Cert(admin.address, metadata=sp.utils.metadata_of_url("ipfs://QmW8jPMdBmFvsSEoLWPPhaozN6jGQFxxkwuMLtVFqEy6Fb"))
     scenario += contract
 
-    # Org mints a token for user1
-    scenario.h2("Mint token")
+    scenario.h2("Org mints a token for user1")
     scenario += contract.mint(sp.list([
         sp.record(
             to_=user1.address,
@@ -97,26 +96,22 @@ def test():
         )])
     ).run(sender=org)
 
-    # User1 tries to transfer token to user2
-    scenario.h2("Transfer token from user1")
+    scenario.h2("User1 tries to transfer token to user2")
     scenario += contract.transfer(sp.list([sp.record(from_=user1.address, txs=sp.list([
         sp.record(to_=user2.address, token_id=sp.nat(0), amount=sp.nat(1))
     ]))])).run(sender=user1, valid=False)
 
-    # User2 tries to burn token from user1
-    scenario.h2("Burn token from user2")
+    scenario.h2("User2 tries to burn token from user1")
     scenario += contract.burn(sp.list([
         sp.record(from_=user1.address, token_id=sp.nat(0), amount=sp.nat(1))
     ])).run(sender=user2, valid=False)
 
-    # User1 burns token
-    scenario.h2("Burn token from user1")
+    scenario.h2("User1 burns their token")
     scenario += contract.burn(sp.list([
         sp.record(from_=user1.address, token_id=sp.nat(0), amount=sp.nat(1))
     ])).run(sender=user1)
 
-    # Org mints another token for user1
-    scenario.h2("Mint another token")
+    scenario.h2("Org mints another token for user1")
     scenario += contract.mint(sp.list([
         sp.record(
             to_=user1.address,
@@ -124,14 +119,12 @@ def test():
         )])
     ).run(sender=org)
 
-    # Org burns token from user1
-    scenario.h2("Burn token from org")
+    scenario.h2("Org burns token from user1")
     scenario += contract.burn(sp.list([
         sp.record(from_=user1.address, token_id=sp.nat(1), amount=sp.nat(1))
     ])).run(sender=org)
 
-    # User1 mints for user2
-    scenario.h2("Mint token for user2")
+    scenario.h2(" User1 mints for user2")
     scenario += contract.mint(sp.list([
         sp.record(
             to_=user2.address,
@@ -139,8 +132,7 @@ def test():
         )])
     ).run(sender=user1)
 
-    # Admin burns token from user2
-    scenario.h2("Burn token from admin")
+    scenario.h2("Admin burns token from user2")
     scenario += contract.burn(sp.list([
         sp.record(from_=user2.address, token_id=sp.nat(2), amount=sp.nat(1))
     ])).run(sender=admin)
