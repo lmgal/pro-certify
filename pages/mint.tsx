@@ -11,9 +11,9 @@ import NavbarDrawer from '@/components/NavbarDrawer'
 import Copyright from '@/components/Copyright'
 
 import { Database } from '@/types/supabase'
-import { Button, Select, Tab, Tabs, Typography } from '@mui/material'
+import { Button, Tab, Tabs, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import { useMemo, useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { Dayjs } from 'dayjs'
@@ -21,13 +21,14 @@ import { Dayjs } from 'dayjs'
 import TabPanel from '@/components/TabPanel'
 import UseTemplate from '@/components/UseTemplate'
 import CreateNew from '@/components/CreateNew'
+import ControlledTextField from '@/components/ControlledTextField'
 
 type Template = Awaited<ReturnType<typeof getTemplates>>[0]
 type MintProps = {
     templates: Template[]
 }
 
-type FormValuesType = Record<string, string | Dayjs>
+type FormValuesType = Record<string, string | Dayjs | File>
 
 export default function Mint(props: MintProps) {
     const router = useRouter()
@@ -37,6 +38,10 @@ export default function Mint(props: MintProps) {
     const { template } = router.query
 
     const [tab, setTab] = useState(template ? 1 : 0)
+
+    const onSubmit = useFormReturn.handleSubmit(async (data) => {
+        
+    })
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -84,6 +89,23 @@ export default function Mint(props: MintProps) {
                                         form={useFormReturn}
                                     /> 
                                 </TabPanel>
+                                <Container>
+                                    <ControlledTextField
+                                        name="recipient"
+                                        label="Recipient Wallet Address"
+                                        control={useFormReturn.control}
+                                        fullWidth
+                                    />
+                                </Container>
+                                <Container>
+                                    <Button
+                                        variant="contained"
+                                        sx={{ mt: 2 }}
+                                        onClick={onSubmit}
+                                    >
+                                        Mint
+                                    </Button>
+                                </Container>
                             </Paper>
                         </Grid>
                     </Grid>
