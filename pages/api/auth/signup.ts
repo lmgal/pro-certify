@@ -99,27 +99,27 @@ const renderHtmlStringEmail = (
 <html>
 <head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta charset=&quot;utf-8&quot;>
+  <meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;ie=edge&quot;>
   <title>Email Confirmation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style type="text/css">
+  <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+  <style type=&quot;text/css&quot;>
   /**
    * Google webfonts. Recommended to include the .woff version for cross-client compatibility.
    */
   @media screen {
     @font-face {
-      font-family: 'Source Sans Pro';
+      font-family: &#39;Source Sans Pro&#39;;
       font-style: normal;
       font-weight: 400;
-      src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
+      src: local(&#39;Source Sans Pro Regular&#39;), local(&#39;SourceSansPro-Regular&#39;), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format(&#39;woff&#39;);
     }
 
     @font-face {
-      font-family: 'Source Sans Pro';
+      font-family: &#39;Source Sans Pro&#39;;
       font-style: normal;
       font-weight: 700;
-      src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGFkQc6VGVFSmCnC_l7QZG60.woff) format('woff');
+      src: local(&#39;Source Sans Pro Bold&#39;), local(&#39;SourceSansPro-Bold&#39;), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGFkQc6VGVFSmCnC_l7QZG60.woff) format(&#39;woff&#39;);
     }
   }
 
@@ -167,7 +167,7 @@ const renderHtmlStringEmail = (
   /**
    * Fix centering issues in Android 4.4.
    */
-  div[style*="margin: 16px 0;"] {
+  div[style*=&quot;margin: 16px 0;&quot;] {
     margin: 0 !important;
   }
 
@@ -199,29 +199,29 @@ const renderHtmlStringEmail = (
   </style>
 
 </head>
-<body style="background-color: #e9ecef;">
+<body style=&quot;background-color: #e9ecef;&quot;>
 
   <!-- start preheader -->
-  <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-    A preheader is the short summary text that follows the subject line when an email is viewed in the inbox.
+  <div class=&quot;preheader&quot; style=&quot;display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;&quot;>
+    Confirm your wallet for ProCertify
   </div>
   <!-- end preheader -->
 
   <!-- start body -->
-  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;>
 
     <!-- start logo -->
     <tr>
-      <td align="center" bgcolor="#e9ecef">
+      <td align=&quot;center&quot; bgcolor=&quot;#e9ecef&quot;>
         <!--[if (gte mso 9)|(IE)]>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+        <table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;600&quot;>
         <tr>
-        <td align="center" valign="top" width="600">
+        <td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;600&quot;>
         <![endif]-->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+        <table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;max-width: 600px;&quot;>
           <tr>
-            <td align="center" valign="top" style="padding: 36px 24px;">
-              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">ProCertify</h1>
+            <td align=&quot;center&quot; valign=&quot;top&quot; style=&quot;padding: 36px 24px;&quot;>
+              <h1 style=&quot;margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;&quot;>ProCertify</h1>
             </td>
           </tr>
         </table>
@@ -236,16 +236,16 @@ const renderHtmlStringEmail = (
 
     <!-- start hero -->
     <tr>
-      <td align="center" bgcolor="#e9ecef">
+      <td align=&quot;center&quot; bgcolor=&quot;#e9ecef&quot;>
         <!--[if (gte mso 9)|(IE)]>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+        <table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;600&quot;>
         <tr>
-        <td align="center" valign="top" width="600">
+        <td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;600&quot;>
         <![endif]-->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+        <table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;max-width: 600px;&quot;>
           <tr>
-            <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
-              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Confirm Your Email Address</h1>
+            <td align=&quot;left&quot; bgcolor=&quot;#ffffff&quot; style=&quot;padding: 36px 24px 0; font-family: &#39;Source Sans Pro&#39;, Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;&quot;>
+              <h1 style=&quot;margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;&quot;>Confirm Your Email Address</h1>
             </td>
           </tr>
         </table>
@@ -260,32 +260,32 @@ const renderHtmlStringEmail = (
 
     <!-- start copy block -->
     <tr>
-      <td align="center" bgcolor="#e9ecef">
+      <td align=&quot;center&quot; bgcolor=&quot;#e9ecef&quot;>
         <!--[if (gte mso 9)|(IE)]>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+        <table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;600&quot;>
         <tr>
-        <td align="center" valign="top" width="600">
+        <td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;600&quot;>
         <![endif]-->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+        <table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;max-width: 600px;&quot;>
 
           <!-- start copy -->
           <tr>
-            <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Tap the button below to go to the confirmation page and enter the code to link the wallet address ${address} to your email address.</p>
+            <td align=&quot;left&quot; bgcolor=&quot;#ffffff&quot; style=&quot;padding: 24px; font-family: &#39;Source Sans Pro&#39;, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;&quot;>
+              <p style=&quot;margin: 0;&quot;>Tap the button below to go to the confirmation page and enter the code to link the wallet address ${address} to your email address.</p>
             </td>
           </tr>
           <!-- end copy -->
 
           <!-- start button -->
           <tr>
-            <td align="left" bgcolor="#ffffff">
-              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <td align=&quot;left&quot; bgcolor=&quot;#ffffff&quot;>
+              <table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;>
                 <tr>
-                  <td align="center" bgcolor="#ffffff" style="padding: 12px;">
-                    <table border="0" cellpadding="0" cellspacing="0">
+                  <td align=&quot;center&quot; bgcolor=&quot;#ffffff&quot; style=&quot;padding: 12px;&quot;>
+                    <table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;>
                       <tr>
-                        <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
-                          <a href="https://procertify.netlify.app/confirm?email=${email}&address=${address}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">${confirmationCode}</a>
+                        <td align=&quot;center&quot; bgcolor=&quot;#1a82e2&quot; style=&quot;border-radius: 6px;&quot;>
+                          <a href=&quot;https://procertify.netlify.app/confirm?email=${email}&address=${address}&quot; target=&quot;_blank&quot; style=&quot;display: inline-block; padding: 16px 36px; font-family: &#39;Source Sans Pro&#39;, Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;&quot;>${confirmationCode}</a>
                         </td>
                       </tr>
                     </table>
@@ -298,16 +298,16 @@ const renderHtmlStringEmail = (
 
           <!-- start copy -->
           <tr>
-            <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">If you didn't create an account with <a href="https://procertify.netlify.app">ProCertify</a>, you can safely delete this email.</p>
+            <td align=&quot;left&quot; bgcolor=&quot;#ffffff&quot; style=&quot;padding: 24px; font-family: &#39;Source Sans Pro&#39;, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;&quot;>
+              <p style=&quot;margin: 0;&quot;>If you didn&#39;t create an account with <a href=&quot;https://procertify.netlify.app&quot;>ProCertify</a>, you can safely delete this email.</p>
             </td>
           </tr>
           <!-- end copy -->
 
           <!-- start copy -->
           <tr>
-            <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf">
-              <p style="margin: 0;">Cheers,<br> ProCertify</p>
+            <td align=&quot;left&quot; bgcolor=&quot;#ffffff&quot; style=&quot;padding: 24px; font-family: &#39;Source Sans Pro&#39;, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf&quot;>
+              <p style=&quot;margin: 0;&quot;>Cheers,<br> ProCertify</p>
             </td>
           </tr>
           <!-- end copy -->
@@ -324,18 +324,18 @@ const renderHtmlStringEmail = (
 
     <!-- start footer -->
     <tr>
-      <td align="center" bgcolor="#e9ecef" style="padding: 24px;">
+      <td align=&quot;center&quot; bgcolor=&quot;#e9ecef&quot; style=&quot;padding: 24px;&quot;>
         <!--[if (gte mso 9)|(IE)]>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+        <table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;600&quot;>
         <tr>
-        <td align="center" valign="top" width="600">
+        <td align=&quot;center&quot; valign=&quot;top&quot; width=&quot;600&quot;>
         <![endif]-->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+        <table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; style=&quot;max-width: 600px;&quot;>
 
           <!-- start permission -->
           <tr>
-            <td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-              <p style="margin: 0;">You received this email because we received a request to link a wallet to your email address. If you didn't request this, you can safely delete this email.</p>
+            <td align=&quot;center&quot; bgcolor=&quot;#e9ecef&quot; style=&quot;padding: 12px 24px; font-family: &#39;Source Sans Pro&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;&quot;>
+              <p style=&quot;margin: 0;&quot;>You received this email because we received a request to link a wallet to your email address. If you didn&#39;t request this, you can safely delete this email.</p>
             </td>
           </tr>
           <!-- end permission -->
