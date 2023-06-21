@@ -42,7 +42,6 @@ export default function Dashboard(props: DashboardProps) {
                 <Toolbar />
                 <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                     <Grid container spacing={3}>
-                        {/* Chart */}
                         <Grid item xs={12} >
                             <Paper
                                 sx={{
@@ -89,7 +88,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             const { data: image } = supabase
                 .storage
                 .from('templates')
-                .getPublicUrl(`${template.id}.svg`)
+                .getPublicUrl(template.id)
 
             return image.publicUrl
         })

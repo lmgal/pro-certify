@@ -6,6 +6,9 @@ import createCache from '@emotion/cache'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 import { WalletProvider } from '@/context/wallet'
 
 import theme from '@/config/theme'
@@ -34,7 +37,9 @@ export default function App({ Component, pageProps }: AppProps) {
           <CssBaseline />
           <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
             <WalletProvider>
-              <Component {...other} />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Component {...other} />
+              </LocalizationProvider>
             </WalletProvider>
           </SessionContextProvider>
         </ThemeProvider>

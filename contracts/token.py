@@ -3,8 +3,17 @@ import smartpy as sp
 FA2 = sp.io.import_template("fa2_lib.py")
 
 class Fa2Cert(FA2.Admin, FA2.Fa2Nft):
-    def __init__(self, admin, metadata, **kwargs):
-        FA2.Fa2Nft.__init__(self, metadata, policy=FA2.NoTransfer(), **kwargs)
+    def __init__(self, admin, **kwargs):
+        FA2.Fa2Nft.__init__(
+            self, 
+            sp.big_map({
+                "name": sp.utils.bytes_of_string("ProCertify NFT"),
+                "author": sp.utils.bytes_of_string("Louie Gallos"),
+                "description": sp.utils.bytes_of_string("An app for creating and verifying certificates as NFT on the Tezos blockchain."),
+            }), 
+            policy=FA2.NoTransfer(), 
+            **kwargs
+        )
         FA2.Admin.__init__(self, admin)
         # Store minters
         self.update_initial_storage(
@@ -85,7 +94,7 @@ def test():
     user2 = sp.test_account("user2")
 
     scenario.h1("ProCertify NFT Contract")
-    contract = Fa2Cert(admin.address, metadata=sp.utils.metadata_of_url("ipfs://QmW8jPMdBmFvsSEoLWPPhaozN6jGQFxxkwuMLtVFqEy6Fb"))
+    contract = Fa2Cert(admin.address)
     scenario += contract
 
     scenario.h2("Org mints a token for user1")

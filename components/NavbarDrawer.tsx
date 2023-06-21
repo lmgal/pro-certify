@@ -147,7 +147,7 @@ export default function NavbarDrawer() {
                         noWrap
                         sx={{ flexGrow: 1 }}
                     >
-                        Dashboard
+                        ProCertify
                     </Typography>
                     <IconButton color="inherit" onClick={handleMenu}>
                         <Tooltip title={address}>
