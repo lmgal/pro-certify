@@ -20,6 +20,7 @@ import { Dayjs } from 'dayjs'
 
 import TabPanel from '@/components/TabPanel'
 import UseTemplate from '@/components/UseTemplate'
+import CreateNew from '@/components/CreateNew'
 
 type Template = Awaited<ReturnType<typeof getTemplates>>[0]
 type MintProps = {
@@ -73,7 +74,9 @@ export default function Mint(props: MintProps) {
                                     </Tabs>
                                 </Box>
                                 <TabPanel value={tab} index={0}>
-
+                                    <CreateNew 
+                                        form={useFormReturn}
+                                    />
                                 </TabPanel>
                                 <TabPanel value={tab} index={1}>
                                     <UseTemplate 
