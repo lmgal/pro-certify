@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { useState, createContext, useContext, useEffect } from "react"
 import { TezosToolkit } from "@taquito/taquito"
 
@@ -10,12 +8,12 @@ type TezosProviderProps = {
 }
 
 // 
-const TezosContext = createContext<TezosToolkit>()
+const TezosContext = createContext<TezosToolkit | null>(null)
 
 /**
  * @returns tezos - the Tezos Wallet API instance
  */
-export const useTezos = () => useContext<TezosToolkit>(TezosContext)
+export const useTezos = () => useContext(TezosContext) as TezosToolkit
 
 export const TezosProvider = (props: TezosProviderProps) => {
     const wallet = useWallet()

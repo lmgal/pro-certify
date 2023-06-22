@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useState, createContext, useContext } from "react"
 import { BeaconWallet } from "@taquito/beacon-wallet"
 import { NetworkType } from "@airgap/beacon-sdk"
@@ -12,7 +11,7 @@ const WalletContext = createContext<BeaconWallet | null>(null)
 /**
  * @returns wallet - the browser wallet extension instance
  */
-export const useWallet = () => useContext<BeaconWallet>(WalletContext) 
+export const useWallet = () => useContext(WalletContext) as BeaconWallet
 
 export const WalletProvider = (props: WalletProviderProps) => {
     const [wallet] = useState(new BeaconWallet({
