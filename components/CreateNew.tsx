@@ -12,19 +12,27 @@ type CreateNewProps = {
     form: UseFormReturn
 }
 
-export default function CreateNew (props: CreateNewProps) {
+type Attributes = {
+    key: string
+    value: string
+}[]
+
+export default function CreateNew(props: CreateNewProps) {
     const { control, watch, reset } = props.form
-    const { fields : attributes, append, remove } = useFieldArray({
+    const { fields: attributes, append, remove } = useFieldArray({
         control,
         name: 'attributes'
     })
 
     const image = watch('image')
+    const attributesWatch = watch('attributes') as Attributes
 
     useEffect(() => {
         reset({
             image: null,
             attributes: [
+                { key: 'Name', value: '' },
+                { key: 'Description', value: '' },
                 { key: '', value: '' }
             ]
         })
@@ -37,13 +45,13 @@ export default function CreateNew (props: CreateNewProps) {
             p={2}
             sx={{ flexDirection: 'column', gap: 2 }}
         >
-            { image && <img 
-                src={URL.createObjectURL(image)} 
-                alt="preview" 
+            {image && <img
+                src={URL.createObjectURL(image)}
+                alt="preview"
                 style={{ width: '500px', height: 'auto' }}
-            /> }
+            />}
             <FileInput control={control} name="image" />
-            { attributes.map((attribute, index) => (
+            {attributes.map((attribute, index) => (
                 <Grid container spacing={2} direction="row">
                     <Grid item xs={5}>
                         <ControlledTextField
@@ -61,13 +69,17 @@ export default function CreateNew (props: CreateNewProps) {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={1}>
-                        <Button variant="contained" onClick={() => remove(index)}>Remove</Button>
-                    </Grid>
+                    { attributesWatch[index].key !== 'Name' 
+                    && attributesWatch[index].key !== 'Description' && (
+                        <Grid item xs={1}>
+                            <Button variant="contained" onClick={() => remove(index)}>Remove</Button>
+                        </Grid>
+                    )}
+
                 </Grid>
             ))}
-            <Button 
-                variant="contained" 
+            <Button
+                variant="contained"
                 onClick={() => append({ key: '', value: '' })}
             >
                 Add attribute

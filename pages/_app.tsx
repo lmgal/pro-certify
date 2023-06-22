@@ -13,6 +13,8 @@ import { WalletProvider } from '@/context/wallet'
 
 import theme from '@/config/theme'
 import Head from 'next/head'
+import { TezosProvider } from '@/context/tezos'
+import { NFTStorageProvider } from '@/context/ipfs'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createCache({ key: 'css' })
@@ -37,9 +39,13 @@ export default function App({ Component, pageProps }: AppProps) {
           <CssBaseline />
           <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
             <WalletProvider>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Component {...other} />
-              </LocalizationProvider>
+              <TezosProvider>
+                <NFTStorageProvider>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Component {...other} />
+                  </LocalizationProvider>
+                </NFTStorageProvider>
+              </TezosProvider>
             </WalletProvider>
           </SessionContextProvider>
         </ThemeProvider>

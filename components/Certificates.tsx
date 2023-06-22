@@ -9,8 +9,8 @@ import Link from 'next/link'
 import { Tooltip } from '@mui/material'
 
 
-type TemplatesProps = {
-    templates: {
+type CertificatesProps = {
+    certificates: {
         id: string,
         name: string,
         imageUrl: string,
@@ -18,30 +18,30 @@ type TemplatesProps = {
     height: string | number
 }
 
-export default function Templates(props: TemplatesProps) {
-    const { templates, height } = props
+export default function Certificates(props: CertificatesProps) {
+    const { certificates, height } = props
 
     return (
         <>
             <Typography component="h2" variant="h6" color="primary">Templates</Typography>
             <Typography component="h3" variant="caption" gutterBottom>
-                Start by clicking a template to mint your NFT
+                Here are the certificates you have minted
             </Typography>
-            {templates?.length! > 0 ? (
+            {certificates?.length! > 0 ? (
                 <ImageList sx={{ height: height }} cols={12} gap={8}>
                     <ImageListItem key="Subheader" />
-                    {templates?.map(template => (
-                        <ImageListItem key={template.id}>
-                            <Link href={`/mint?templateId=${template.id}`}>
+                    {certificates?.map(certificate => (
+                        <ImageListItem key={certificate.id}>
+                            <Link href={`/mint?templateId=${certificate.id}`}>
                                 <img
-                                    src={template.imageUrl}
-                                    alt={template.name}
+                                    src={certificate.imageUrl}
+                                    alt={certificate.name}
                                     loading='lazy'
                                     width={300}
                                 />
                             </Link>
                             <ImageListItemBar
-                                title={template.name}
+                                title={certificate.name}
                                 actionIcon={
                                     <Tooltip title='Edit template'>
                                         <IconButton
@@ -62,7 +62,7 @@ export default function Templates(props: TemplatesProps) {
                     justifyContent: 'center'
                 }}>
                     <Typography variant='body1' textAlign='center'>
-                        Seems empty here, try creating a template first
+                        Seems empty here, mint a new certificate!
                     </Typography>
                 </Box>
             )

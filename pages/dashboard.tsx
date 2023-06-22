@@ -9,12 +9,12 @@ import Paper from '@mui/material/Paper'
 
 import NavbarDrawer from '@/components/NavbarDrawer'
 import Copyright from '@/components/Copyright'
-import Templates from '@/components/Templates'
+import Certificates from '@/components/Certificates'
 
 import { Database } from '@/types/supabase'
 
 type DashboardProps = {
-    templates: { 
+    certificates: { 
         id: string,
         name: string,
         imageUrl: string
@@ -22,7 +22,7 @@ type DashboardProps = {
 }
 
 export default function Dashboard(props: DashboardProps) {
-    const { templates } = props
+    const { certificates: templates } = props
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -51,7 +51,7 @@ export default function Dashboard(props: DashboardProps) {
                                     minHeight: 240,
                                 }}
                             >
-                                <Templates templates={templates} height={225} />
+                                <Certificates certificates={templates} height={225} />
                             </Paper>
                         </Grid>
                     </Grid>

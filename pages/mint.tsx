@@ -17,22 +17,34 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { Dayjs } from 'dayjs'
+import parse, { domToReact, HTMLReactParserOptions } from 'html-react-parser'
 
 import TabPanel from '@/components/TabPanel'
 import UseTemplate from '@/components/UseTemplate'
 import CreateNew from '@/components/CreateNew'
 import ControlledTextField from '@/components/ControlledTextField'
 
+import { useNFTStorage } from '@/context/ipfs'
+import { useTezos } from '@/context/tezos'
+
+import { mint } from '@/util/operations'
+
 type Template = Awaited<ReturnType<typeof getTemplates>>[0]
 type MintProps = {
     templates: Template[]
 }
 
-type FormValuesType = Record<string, string | Dayjs | File>
+type FormValuesType = Record<string, string | Dayjs | File | number>
 
 export default function Mint(props: MintProps) {
     const router = useRouter()
-    const useFormReturn = useForm<FormValuesType>()
+    const useFormReturn = useForm<FormValuesType>({
+        defaultValues: {
+            index: 0
+        }
+    })
+    const nftStorage = useNFTStorage()
+    const tezos = useTezos()
 
     const { templates } = props
     const { template } = router.query
@@ -40,7 +52,99 @@ export default function Mint(props: MintProps) {
     const [tab, setTab] = useState(template ? 1 : 0)
 
     const onSubmit = useFormReturn.handleSubmit(async (data) => {
-        
+        const { name, description, image, recipient, ...rest } = data
+        // Create new
+        if (tab === 0) {
+            const metadata = await nftStorage.store({
+                name: name as string,
+                description: description as string,
+                image: new File([image as Blob], 'image.png', { type: 'image/png' }),
+                ...rest
+            })
+
+            await mint(tezos, [{
+                to_: recipient as string,
+                ipfs: metadata.url
+            }])
+
+            router.push('/dashboard')
+        }
+
+        // Use template
+        if (tab === 1) {
+            const template = templates[rest.index as number]
+
+            const options: HTMLReactParserOptions = {
+                replace: (domNode) => {
+                    // @ts-ignore
+                    const { attribs, children, name: nodeName } = domNode
+    
+                    if (!attribs)
+                        return
+    
+                    if (nodeName === 'svg') {
+                        // Make the width and adjust height with aspect ratio
+                        attribs.height = 500 * (attribs.height / attribs.width)
+                        attribs.width = 500
+    
+                        return <svg {
+                            ...attribs
+                        }>{domToReact(children, options)}</svg>
+                    }
+    
+                    for (const attribute of template.attributes) {
+                        const { svg_id, types } = attribute
+                        if (attribs.id === svg_id) {
+                            let text = ''
+                            switch (types!.name) {
+                                case 'text':
+                                    text = data[svg_id] as string
+                                    break
+                                case 'date':
+                                    text = (data[svg_id] as Dayjs).format('DD/MM/YYYY')
+                                    break
+                            }
+                            if (nodeName === 'text')
+                                return <text {...attribs}>
+                                    {text}
+                                </text>
+    
+                            if (nodeName === 'tspan') {
+                                return <tspan {...attribs}>
+                                    {text}
+                                </tspan>
+                            }
+    
+                        }
+                    }
+                }
+            }
+
+            const svgText = parse(template.image, options).toString()
+
+            const parsedRest : Record<string, string> = {}
+            for (let [key, value] of Object.entries(rest)) {
+                if (value instanceof Dayjs)
+                    parsedRest[key] = value.format('DD/MM/YYYY')
+                
+                if (typeof value === 'string')
+                    parsedRest[key] = value
+            }
+
+            const metadata = await nftStorage.store({
+                name: template.name,
+                description: template.description ?? '',
+                image: new File([svgText], 'image.svg', { type: 'image/svg+xml' }),
+                ...parsedRest
+            })
+
+            await mint(tezos, [{
+                to_: recipient as string,
+                ipfs: metadata.url
+            }])
+
+            router.push('/dashboard')
+        }
     })
 
     return (
@@ -79,15 +183,15 @@ export default function Mint(props: MintProps) {
                                     </Tabs>
                                 </Box>
                                 <TabPanel value={tab} index={0}>
-                                    <CreateNew 
+                                    <CreateNew
                                         form={useFormReturn}
                                     />
                                 </TabPanel>
                                 <TabPanel value={tab} index={1}>
-                                    <UseTemplate 
-                                        templates={templates} 
+                                    <UseTemplate
+                                        templates={templates}
                                         form={useFormReturn}
-                                    /> 
+                                    />
                                 </TabPanel>
                                 <Container>
                                     <ControlledTextField

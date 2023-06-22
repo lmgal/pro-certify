@@ -29,7 +29,7 @@ export default function UseTemplate(props: UseTemplateProps) {
     const { templates, form } = props
     const { watch, control, setValue } = form
 
-    const [index, setIndex] = useState(0)
+    const [index, setIndex] = watch('index')
 
     const template = useMemo(() => {
         for (const attribute of templates[index].attributes) {
@@ -48,7 +48,7 @@ export default function UseTemplate(props: UseTemplateProps) {
     useEffect(() => {
         if (router.query.template) {
             const index = templates.findIndex(template => template.id === router.query.template)
-            setIndex(index)
+            setValue('index', index)
         }
     }, [])
 

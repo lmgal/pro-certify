@@ -11,7 +11,6 @@ import AddIcon from '@mui/icons-material/Add'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import Badge from '@mui/material/Badge'
 import MuiDrawer from '@mui/material/Drawer'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
@@ -24,6 +23,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import HomeIcon from '@mui/icons-material/Home'
+import AddCardIcon from '@mui/icons-material/AddCard'
 
 import { useWallet } from '@/context/wallet'
 
@@ -189,13 +189,19 @@ export default function NavbarDrawer() {
                 </Toolbar>
                 <Divider />
                 <List component="nav">
-                    <ListItemButton>
+                    <ListItemButton onClick={() => router.push('/dashboard')}>
                         <ListItemIcon>
                             <HomeIcon />
                         </ListItemIcon>
                         <ListItemText primary="Dashboard" />
                     </ListItemButton>
-                    <ListItemButton>
+                    <ListItemButton onClick={() => router.push('/mint')}>
+                        <ListItemIcon>
+                            <AddCardIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Mint" />
+                    </ListItemButton>
+                    <ListItemButton onClick={() => router.push('/add-template')}>
                         <ListItemIcon>
                             <AddIcon />
                         </ListItemIcon>
